@@ -1,0 +1,8 @@
+# Ignore virtual environment directory
+my_venv/
+
+# Ignore output folder
+output/
+output_images/
+ 
+
