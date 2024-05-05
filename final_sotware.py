@@ -20,7 +20,20 @@ from mtcnn.mtcnn import MTCNN
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'
 
 
+def setup_tapo_camera():
+    # Set up camera connection details
+    ip_address = '192.168.x.x'  # Replace with the IP address of your camera
+    port = '554'                  # Replace with the port number for your camera
+    username = 'username'            # Replace with the username for your camera
+    password = 'password'         # Replace with the password for your camera
 
+    # Construct the RTSP stream URLs using variables
+    # url_640x480 = f"rtsp://{username}:{password}@{ip_address}:{port}/stream2"
+    # url_1080p = f"rtsp://{username}:{password}@{ip_address}:{port}/stream1"
+    url_2k = f"rtsp://{username}:{password}@{ip_address}:{port}/stream1_2k"
+
+    # Set up RTSP stream URL
+    return url_2k  # Assuming you want to use the 640x480 stream
 
 
 
@@ -65,7 +78,7 @@ def dataset_creation(parameters):
 
     gpu_fraction = gpu
     if gpu_fraction == "":
-        gpu_fraction = 0.8
+        gpu_fraction = 1.0
     else:
         gpu_fraction = round(float(gpu_fraction), 1)
 
@@ -548,7 +561,7 @@ def recognize(mode, parameters):
 
     # Initialize webcam or video if no image format
     if input_type != "i":
-        device = cv2.VideoCapture(data_type)
+        device = cv2.VideoCapture(setup_tapo_camera())
 
     # If webcam set resolution
     if input_type == "w":
@@ -673,7 +686,7 @@ def recognize(mode, parameters):
             frame_no += 1
 
         # if the `q` key was pressed, break from the loop
-        if cv2.waitKey(1) == 'q':
+        if cv2.waitKey(1) & 0xFF == ord('q'):
             # do a bit of cleanup
             if save_video:
                 output_video.release()

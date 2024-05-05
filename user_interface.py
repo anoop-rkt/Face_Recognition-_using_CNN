@@ -14,15 +14,28 @@ from xlwt import Workbook
 def s_exit():
     exit(0)
 
+def setup_tapo_camera():
+    # Set up camera connection details
+    ip_address = '192.168.x.x'  # Replace with the IP address of your camera
+    port = '554'                  # Replace with the port number for your camera
+    username = 'username'            # Replace with the username for your camera
+    password = 'password'         # Replace with the password for your camera
+
+    # Construct the RTSP stream URLs using variables
+    url_640x480 = f"rtsp://{username}:{password}@{ip_address}:{port}/stream2"
+    url_1080p = f"rtsp://{username}:{password}@{ip_address}:{port}/stream1"
+
+    # Set up RTSP stream URL
+    return url_640x480  # Assuming you want to use the 640x480 stream
 
 def putwindow():
 
     window = Tk()
-    window.geometry("800x500")
+    window.geometry("800x700")
     #window.configure(background='')
     window.title("Attendance System")
     #window.geometry("800x500")
-    tkinter.Label(window, text = "^^ WELCOME TO FACE DETECTION AND RECOGNITION SOFTWARE ^^", fg = "black", bg = "darkorange").pack(fill = "x")
+    tkinter.Label(window, text = " WELCOME TO FACE DETECTION AND RECOGNITION SOFTWARE ", fg = "black", bg = "darkorange").pack(fill = "x")
     tkinter.Label(window, text = '- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -', bg = 'orange').pack(fill = 'x')
     tkinter.Label(window, text = '- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -', bg = 'orange').pack(fill = 'x')
 
@@ -56,8 +69,10 @@ def putwindow():
         window.destroy()
         show()
 
-    btn1 = tkinter.Button(window, text = "CONTINUE", fg = "black", bg = 'turquoise1', command = cont_inue)
-    btn1.place(x=360, y=450, width=80)
+    frame = Frame(window)
+    frame.pack(side="bottom", padx=10, pady=50)
+    btn1 = Button(frame, text="CONTINUE", fg="black", bg='turquoise1', command=cont_inue)
+    btn1.pack(side="bottom")
 
 
 
@@ -69,8 +84,8 @@ def show():
     #putwindow.window.destroy()
     window2 = Tk()
     window2.title("Attendance System")
-    window2.geometry("800x500")
-    tkinter.Label(window2, text = "^^ WELCOME TO FACE DETECTION AND RECOGNITION SOFTWARE ^^", fg="black", bg="darkorange").pack(fill="x")
+    window2.geometry("800x700")
+    tkinter.Label(window2, text = " WELCOME TO FACE DETECTION AND RECOGNITION SOFTWARE ", fg="black", bg="darkorange").pack(fill="x")
     tkinter.Label(window2, text = '- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -', bg='orange').pack(fill='x')
     tkinter.Label(window2, text = '- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -', bg='orange').pack(fill='x')
 
@@ -137,7 +152,7 @@ def show_run():
     #window3.configure(background='lightyellow')
     window3.title("Attendance System")
     window3.geometry("1200x800")
-    tkinter.Label(window3, text = "^^ WELCOME TO FACE DETECTION AND RECOGNITION SOFTWARE ^^", fg="black", bg="darkorange").pack(fill="x")
+    tkinter.Label(window3, text = " WELCOME TO FACE DETECTION AND RECOGNITION SOFTWARE ", fg="black", bg="darkorange").pack(fill="x")
     tkinter.Label(window3, text = '- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -', bg='orange').pack(fill='x')
     tkinter.Label(window3, text="\n\n ").pack(fill='y')
 
@@ -283,7 +298,7 @@ def show_create():
     window4 = Tk()
     window4.title("Attendance System")
     window4.geometry("800x500")
-    tkinter.Label(window4, text = "^^ WELCOME TO FACE DETECTION AND RECOGNITION SOFTWARE ^^", fg="black", bg="darkorange").pack(fill="x")
+    tkinter.Label(window4, text = " WELCOME TO FACE DETECTION AND RECOGNITION SOFTWARE ", fg="black", bg="darkorange").pack(fill="x")
     tkinter.Label(window4, text = '- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -', bg='orange').pack(fill='x')
     tkinter.Label(window4, text="\n\n ").pack(fill='y')
 
@@ -374,7 +389,7 @@ def show_train():
     window5 = Tk()
     window5.title("Attendance System")
     window5.geometry("800x500")
-    tkinter.Label(window5, text = "^^ WELCOME TO FACE DETECTION AND RECOGNITION SOFTWARE ^^", fg="black", bg="darkorange").pack(fill="x")
+    tkinter.Label(window5, text = " WELCOME TO FACE DETECTION AND RECOGNITION SOFTWARE ", fg="black", bg="darkorange").pack(fill="x")
     tkinter.Label(window5, text = '- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -', bg='orange').pack(fill='x')
     tkinter.Label(window5, text="\n\n ").pack(fill='y')
 
@@ -465,7 +480,7 @@ def show_test():
     window6 = Tk()
     window6.title("Attendance System")
     window6.geometry("800x500")
-    tkinter.Label(window6, text = "^^ WELCOME TO FACE DETECTION AND RECOGNITION SOFTWARE ^^", fg="black", bg="darkorange").pack(fill="x")
+    tkinter.Label(window6, text = " WELCOME TO FACE DETECTION AND RECOGNITION SOFTWARE ", fg="black", bg="darkorange").pack(fill="x")
     tkinter.Label(window6, text = '- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -', bg='orange').pack(fill='x')
     tkinter.Label(window6, text="\n\n ").pack(fill='y')
 
