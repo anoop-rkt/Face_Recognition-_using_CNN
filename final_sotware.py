@@ -20,20 +20,20 @@ from mtcnn.mtcnn import MTCNN
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'
 
 
-def setup_tapo_camera():
-    # Set up camera connection details
-    ip_address = '192.168.x.x'  # Replace with the IP address of your camera
-    port = '554'                  # Replace with the port number for your camera
-    username = 'username'            # Replace with the username for your camera
-    password = 'password'         # Replace with the password for your camera
+# def setup_tapo_camera():
+#     # Set up camera connection details
+#     ip_address = '192.168.x.x'  # Replace with the IP address of your camera
+#     port = '554'                  # Replace with the port number for your camera
+#     username = 'username'            # Replace with the username for your camera
+#     password = 'password'         # Replace with the password for your camera
 
-    # Construct the RTSP stream URLs using variables
-    # url_640x480 = f"rtsp://{username}:{password}@{ip_address}:{port}/stream2"
-    # url_1080p = f"rtsp://{username}:{password}@{ip_address}:{port}/stream1"
-    url_2k = f"rtsp://{username}:{password}@{ip_address}:{port}/stream1_2k"
+#     # Construct the RTSP stream URLs using variables
+#     # url_640x480 = f"rtsp://{username}:{password}@{ip_address}:{port}/stream2"
+#     # url_1080p = f"rtsp://{username}:{password}@{ip_address}:{port}/stream1"
+#     url_2k = f"rtsp://{username}:{password}@{ip_address}:{port}/stream1_2k"
 
-    # Set up RTSP stream URL
-    return url_2k  # Assuming you want to use the 640x480 stream
+#     # Set up RTSP stream URL
+#     return url_2k  # Assuming you want to use the 640x480 stream
 
 
 
@@ -95,7 +95,7 @@ def dataset_creation(parameters):
     face_size = face_dim
     if face_size == "":
         face_size = (160, 160)
-        print('default face size')
+        # print('default face size')
     else:
         face_size = tuple(map(int, face_size.split('x')))
     affine = FaceAligner(desiredLeftEye=(0.33, 0.33), desiredFaceWidth=face_size[0], desiredFaceHeight=face_size[1])
@@ -201,7 +201,7 @@ def train(parameters):
 
     gpu_fraction = gpu  # input("\nEnter the gpu memory fraction u want to allocate out of 1 or press ENTER for default 0.8: ").rstrip().lstrip()
     if gpu_fraction == "":
-        gpu_fraction = 0.8
+        gpu_fraction = 1.0
     else:
         gpu_fraction = round(float(gpu_fraction), 1)
 
@@ -318,7 +318,7 @@ def test(parameters, classifier_filename="", emb_array=[], labels_test=[], model
 
     gpu_fraction = gpu  # input("\nEnter the gpu memory fraction u want to allocate out of 1 or press ENTER for default 0.8: ").rstrip().lstrip()
     if gpu_fraction == "":
-        gpu_fraction = 0.8
+        gpu_fraction = 1.0
     else:
         gpu_fraction = round(float(gpu_fraction), 1)
 
@@ -435,7 +435,7 @@ def recognize(mode, parameters):
         gpu_fraction = round(float(gpu_fraction), 1)
 
     else:
-        gpu_fraction = 0.8
+        gpu_fraction = 1.0
 
     # input_type = input("\nPress I for image input OR\nPress V for video input OR\nPress W for webcam input OR\nPress ENTER for default webcam: ").lstrip().rstrip().lower()
     # if input_type == "":
@@ -561,7 +561,7 @@ def recognize(mode, parameters):
 
     # Initialize webcam or video if no image format
     if input_type != "i":
-        device = cv2.VideoCapture(setup_tapo_camera())
+        device = cv2.VideoCapture(data_type)
 
     # If webcam set resolution
     if input_type == "w":
@@ -578,7 +578,7 @@ def recognize(mode, parameters):
             video_format = int(device.get(cv2.CAP_PROP_FOURCC))
             frame_size = (int(device.get(cv2.CAP_PROP_FRAME_WIDTH)), int(device.get(cv2.CAP_PROP_FRAME_HEIGHT)))
             # Creating video writer to save the video after process if needed
-            output_video = cv2.VideoWriter("/home/ml/Documents/attendance_dl/videos/dslr/Output_" + data_type, video_format, fps, frame_size)
+            output_video = cv2.VideoWriter("/home/ml/Documents/attendance_dl/videos/dslr/Output_" + data_type, video_format, fps, frame_size)    
 
     # Start web cam or start video and start creating dataset by user.
     while loop_type or (frame_no <= total_frames):
@@ -621,8 +621,8 @@ def recognize(mode, parameters):
 
             for col in range(points.shape[1]):
                 aligned_image = affine.align(image, points[:, col])
-                print(aligned_image)
-                print("\n" + str(len(aligned_image)))
+                # print(aligned_image)
+                # print("\n" + str(len(aligned_image)))
 
                 # Prewhiten the image for facenet architecture to give better results
                 mean = np.mean(aligned_image)
@@ -694,6 +694,10 @@ def recognize(mode, parameters):
             cv2.destroyAllWindows()
             break
 
+    if cv2.waitKey(1) & 0xFF == ord('q'):
+            device.release()
+            cv2.destroyAllWindows()
+            
     return st_name
 
   

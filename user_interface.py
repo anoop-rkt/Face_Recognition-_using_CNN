@@ -14,19 +14,19 @@ from xlwt import Workbook
 def s_exit():
     exit(0)
 
-def setup_tapo_camera():
-    # Set up camera connection details
-    ip_address = '192.168.x.x'  # Replace with the IP address of your camera
-    port = '554'                  # Replace with the port number for your camera
-    username = 'username'            # Replace with the username for your camera
-    password = 'password'         # Replace with the password for your camera
+# def setup_tapo_camera():
+#     # Set up camera connection details
+#     ip_address = '192.168.x.x'  # Replace with the IP address of your camera
+#     port = '554'                  # Replace with the port number for your camera
+#     username = 'username'            # Replace with the username for your camera
+#     password = 'password'         # Replace with the password for your camera
 
-    # Construct the RTSP stream URLs using variables
-    url_640x480 = f"rtsp://{username}:{password}@{ip_address}:{port}/stream2"
-    url_1080p = f"rtsp://{username}:{password}@{ip_address}:{port}/stream1"
+#     # Construct the RTSP stream URLs using variables
+#     url_640x480 = f"rtsp://{username}:{password}@{ip_address}:{port}/stream2"
+#     url_1080p = f"rtsp://{username}:{password}@{ip_address}:{port}/stream1"
 
-    # Set up RTSP stream URL
-    return url_640x480  # Assuming you want to use the 640x480 stream
+#     # Set up RTSP stream URL
+#     return url_640x480  # Assuming you want to use the 640x480 stream
 
 def putwindow():
 
